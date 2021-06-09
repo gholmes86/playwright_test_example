@@ -37,9 +37,7 @@ it('should add a new course', async () => {
     await page.click('//*[contains(@href,"/learn/manager/course/new")]');
     await page.$('//*[contains(@class,"btn btn--primary--manager")]')
     expect(await page.$('//*[contains(@class,"btn btn--primary--manager")]'));
-    const example = await page.$('//*[contains(@class,"btn btn--primary--manager")]');
-    await example.click;
-    await page.$('//*[@class="ember-view ember-text-field form-control input--large"]')
+    await page.click('//button[contains(@class,"btn btn--primary--manager")]');
     await page.fill('//*[@class="ember-view ember-text-field form-control input--large"]',"Test Course"+Math.floor(Math.random()*6) + 1);
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
