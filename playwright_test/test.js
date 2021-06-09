@@ -4,6 +4,7 @@ const assert = require("assert");
 let browser;
 let page;
 beforeAll(async () => {
+    jest.setTimeout(10000)
     browser = await chromium.launch({ headless: false });
 });
 afterAll(async () => {
@@ -12,6 +13,7 @@ afterAll(async () => {
 beforeEach(async () => {
     page = await browser.newPage();
 });
+
 afterEach(async () => {
     await page.close();
 });
@@ -34,9 +36,9 @@ it('should add a new course', async () => {
     await page.$('//*[contains(@href,"/learn/manager/course/new")]')
     await page.click('//*[contains(@href,"/learn/manager/course/new")]');
     await page.$('//*[contains(@class,"btn btn--primary--manager")]')
-    await page.$('//*[contains(@class,"btn btn--primary--manager")]')
+    expect(await page.$('//*[contains(@class,"btn btn--primary--manager")]'));
     const example = await page.$('//*[contains(@class,"btn btn--primary--manager")]');
-    await example.click();
+    await example.click;
     await page.$('//*[@class="ember-view ember-text-field form-control input--large"]')
     await page.fill('//*[@class="ember-view ember-text-field form-control input--large"]',"Test Course"+Math.floor(Math.random()*6) + 1);
     await page.keyboard.press('Tab');
@@ -46,7 +48,7 @@ it('should add a new course', async () => {
     await page.click('//button[contains(text(),"Release")]');
     await page.click('//*[@class="btn btn--success-new btn--right"][contains(text(),"Save & Release)]');
     expect(await page.$('//*[contains(@placeholder,"Enter section name")]'));
-});
+}, 10000);
 
 it('should login sucessfully', async () => {
     const email = 'gabriel.holmes@testingti.com'
